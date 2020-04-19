@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "next",
     "build": "next build",
+    "export": "next export",
     "start": "next start",
     "lint": "eslint . --ext .jsx,.js; exit 0",
     "fix": "eslint . --ext .jsx,.js --fix; exit 0"
