@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import io from 'socket.io-client';
 import Layout from '../components/Layout';
 
+const twitchUserName = 'linkywolfe';
 const socketURL =
   process.env.NODE_ENV === 'production'
     ? 'https://clapcitycinema.herokuapp.com'
@@ -16,5 +17,16 @@ export default function NowShowing() {
     });
   }, []);
 
-  return <Layout>Now showing page</Layout>;
+  return (
+    <Layout theme='dark'>
+      <iframe
+        src={`https://player.twitch.tv/?channel=${twitchUserName}&parent=${socketURL}`}
+        height="80%"
+        width="100%"
+        frameBorder="0"
+        scrolling="no"
+        allowFullScreen="true">
+      </iframe>
+    </Layout>
+  );
 }
