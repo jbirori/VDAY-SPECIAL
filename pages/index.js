@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import Link from 'next/link';
+import fetch from 'isomorphic-unfetch';
 
 import Layout from '../components/Layout';
 
@@ -43,11 +45,15 @@ export default function Index({ isLive }) {
   );
 }
 
-Index.getInitialProps = async ctx => {
-  const res = await fetch(`${baseUrl}/api/twitch?reqType=isLive`).then(async response => {
+Index.getInitialProps = async () => {
+  const res = await fetch(`${baseUrl}/api/twitch?reqType=isLive`).then(async (response) => {
     const reply = await response.json();
     return reply.response;
   });
 
   return { isLive: res };
-}
+};
+
+Index.propTypes = {
+  isLive: PropTypes.bool.isRequired,
+};

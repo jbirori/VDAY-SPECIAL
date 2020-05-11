@@ -4,8 +4,8 @@ import Header from './Header';
 
 const themeTypes = {
   LIGHT: 'light',
-  DARK: 'dark'
-}
+  DARK: 'dark',
+};
 
 class Layout extends PureComponent {
   render() {
@@ -26,7 +26,7 @@ class Layout extends PureComponent {
               height: 100%;
               width: 100%;
               margin: 0px !important;
-              background-color: ${theme == themeTypes.LIGHT ? '#fff' : '#1F1F1F'}
+              background-color: ${theme === themeTypes.LIGHT ? '#fff' : '#1F1F1F'};
             }
 
             .page {
@@ -53,7 +53,7 @@ Layout.propTypes = {
 };
 
 Layout.defaultProps = {
-  theme: 'light'
-}
+  theme: 'light',
+};
 
 export default Layout;
