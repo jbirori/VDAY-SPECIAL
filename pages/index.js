@@ -1,15 +1,25 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Link from 'next/link';
+import fetch from 'isomorphic-unfetch';
 
 import Layout from '../components/Layout';
 
-export default function Index() {
+const baseUrl =
+  process.env.NODE_ENV === 'production'
+    ? 'https://clapcitycinema.herokuapp.com'
+    : 'http://localhost:3000';
+
+export default function Index({ isLive }) {
   return (
     <Layout>
       <div className="home-page">
-        <Link href="/NowShowing">
-          <img className="admit" src="/admit_one.png" alt="Admission Ticket" />
-        </Link>
+        {!isLive && <img className="disabled" src="/admit_one.png" alt="Admission Ticket" />}
+        {isLive && (
+          <Link href="/now-showing">
+            <img className="admit" src="/admit_one.png" alt="Admission Ticket" />
+          </Link>
+        )}
       </div>
 
       <style jsx>
@@ -25,8 +35,25 @@ export default function Index() {
           .admit {
             cursor: pointer;
           }
+
+          .disabled {
+            opacity: 0.3;
+          }
         `}
       </style>
     </Layout>
   );
 }
+
+Index.getInitialProps = async () => {
+  const res = await fetch(`${baseUrl}/api/twitch?reqType=isLive`).then(async (response) => {
+    const reply = await response.json();
+    return reply.response;
+  });
+
+  return { isLive: res };
+};
+
+Index.propTypes = {
+  isLive: PropTypes.bool.isRequired,
+};

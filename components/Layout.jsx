@@ -2,9 +2,14 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Header from './Header';
 
+const themeTypes = {
+  LIGHT: 'light',
+  DARK: 'dark',
+};
+
 class Layout extends PureComponent {
   render() {
-    const { children } = this.props;
+    const { children, theme } = this.props;
     return (
       <div className="page">
         <Header />
@@ -21,6 +26,7 @@ class Layout extends PureComponent {
               height: 100%;
               width: 100%;
               margin: 0px !important;
+              background-color: ${theme === themeTypes.LIGHT ? '#fff' : '#1F1F1F'};
             }
 
             .page {
@@ -43,6 +49,11 @@ class Layout extends PureComponent {
 
 Layout.propTypes = {
   children: PropTypes.node.isRequired,
+  theme: PropTypes.string,
+};
+
+Layout.defaultProps = {
+  theme: 'light',
 };
 
 export default Layout;
