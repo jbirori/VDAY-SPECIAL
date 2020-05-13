@@ -16,12 +16,12 @@ export default function NowShowing(props) {
     <Layout theme="dark" nowShowing>
       <div className="nowShowing-body">
         <iframe
-          src={`https://player.twitch.tv/?channel=${twitchUserName}&parent=https://clapcitycinema.herokuapp.com`}
+          src={`https://player.twitch.tv/?channel=${twitchUserName}`}
           height="80%"
           width="100%"
           frameBorder="0"
           scrolling="no"
-          allowFullScreen="true"
+          allowFullScreen
           title="Twitch stream"
         />
       </div>
