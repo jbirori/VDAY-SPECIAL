@@ -44,6 +44,7 @@ export default function NowShowing() {
           align-items: center;
           justify-content: center;
           margin-top: 15px;
+          height: calc(100vh - 120px); 
         }
 
         iframe {
