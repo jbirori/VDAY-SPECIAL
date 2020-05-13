@@ -26,26 +26,30 @@ export default function NowShowing() {
 
   return (
     <Layout theme="dark" nowShowing>
-      <iframe
-        src={`https://player.twitch.tv/?channel=${twitchUserName}&parent=${socketURL}`}
-        height="80%"
-        width="100%"
-        frameBorder="0"
-        scrolling="no"
-        allowFullScreen="true"
-        title="Twitch stream"
-      />
-      <button type="button" aria-label="Test Button" onClick={sendMessage}>
-        Send Test Message
-      </button>
-      <div>
-        <h1>All Messages</h1>
-        <ul>
-          {messages.map((message) => (
-            <li key={message}>{message}</li>
-          ))}
-        </ul>
+      <div className='nowShowing-body'>
+        <iframe
+          src={`https://player.twitch.tv/?channel=${twitchUserName}&parent=${socketURL}`}
+          height="80%"
+          width="100%"
+          frameBorder="0"
+          scrolling="no"
+          allowFullScreen="true"
+          title="Twitch stream"
+        />
       </div>
+      <style jsx>{`
+        .nowShowing-body {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          margin-top: 15px;
+        }
+
+        iframe {
+          width: 90%;
+        }
+      `}</style>
     </Layout>
   );
 }

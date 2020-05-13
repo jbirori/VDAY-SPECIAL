@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { withUserAgent } from 'next-useragent';
 import Link from 'next/link';
 import fetch from 'isomorphic-unfetch';
 import Layout from '../components/Layout';
@@ -9,24 +10,48 @@ const baseUrl =
     ? 'https://clapcitycinema.herokuapp.com'
     : 'http://localhost:3000';
 
-export default function Index({ isLive }) {
+function Index(props) {
   const [ ticketHover, setTicketHover ] = useState(false);
+  const [width, setWidth] = useState(null);
+  const { isMobile } = props.ua;
+  const { isLive } = props;
+  const getWidth = () => window.innerWidth
+    || document.documentElement.clientWidth
+    || document.body.clientWidth;
+
+  useEffect(() => {
+    const resizeListener = () => {
+      // change width from the state object
+      setWidth(getWidth())
+    };
+    resizeListener();
+    // set resize listener
+    window.addEventListener('resize', resizeListener);
+
+    // clean up function
+    return () => {
+      // remove resize listener
+      window.removeEventListener('resize', resizeListener);
+    }
+  }, [])
+
+  const renderMobile = isMobile || (width !== null && width < 450);
   const toggleTicketHover = () => setTicketHover(!ticketHover);
   return (
-    <Layout theme='dark'>
+    <Layout isMobile={renderMobile} theme='dark'>
       <div className="home-page">
         <div className='overlay'></div>
         {!isLive && (
           <div className='body'>
           <img className="marquee" src="/marquee-title.png" alt="Lineup" />
-            <img className="disabled" src="/admit_one.png" alt="Admission Ticket" />
+            <img className="disabled" src="/red_ticket.png" alt="Admission Ticket" />
           </div>
         )}
         {isLive && (
           <div className='body'>
             <img className="marquee" src="/marquee-title.png" alt="Lineup" />
             <Link href="/now-showing">
-              <img className="admit" src="/admit_one.png" onMouseOver={toggleTicketHover} onMouseOut={toggleTicketHover} alt="Admission Ticket" />
+              <img className="admit" src="/red_ticket.png" onMouseOver={toggleTicketHover} onMouseOut={toggleTicketHover} alt="Admission Ticket" />
             </Link>
           </div>
         )}
@@ -57,7 +82,7 @@ export default function Index({ isLive }) {
 
           .logo {
             max-width: 50%;
-            margin-top: 60px;
+            margin-top: 25px;
           }
 
           .showing-content {
@@ -87,6 +112,7 @@ export default function Index({ isLive }) {
             z-index: 1;
             width: 90%;
             align-items: center;
+            justify-content: center;
             position: relative;
           }
 
@@ -124,7 +150,6 @@ export default function Index({ isLive }) {
             top: 0;
             left: 0;
             z-index: -1;
-
             background-image: url('/CCC-bkg.png');
             background-position: center;
             background-repeat: no-repeat;
@@ -142,6 +167,10 @@ export default function Index({ isLive }) {
             background-color: ${isLive ? '#1B1B1B' : '#FFFFFF'};
           }
 
+          .disabled {
+            opacity: .4;
+          }
+
           .admit, .disabled {
             z-index: 2;
             width: 125px;
@@ -155,7 +184,7 @@ export default function Index({ isLive }) {
           }
         `}
       </style>
-    </div>
+    </Layout>
   );
 }
 
@@ -171,3 +200,5 @@ Index.getInitialProps = async () => {
 Index.propTypes = {
   isLive: PropTypes.bool.isRequired,
 };
+
+export default withUserAgent(Index)

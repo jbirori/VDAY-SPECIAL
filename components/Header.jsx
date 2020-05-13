@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 
-export default function Header() {
+export default function Header(props) {
   return (
     <div className="header">
       <Link href="/">
@@ -19,7 +19,7 @@ export default function Header() {
 
           .logo {
             position: relative;
-            height: 100%;
+            height: ${props.isMobile ? 'auto' : '100%'};
             cursor: pointer;
           }
         `}

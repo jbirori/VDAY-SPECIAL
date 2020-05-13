@@ -9,10 +9,10 @@ const themeTypes = {
 
 class Layout extends PureComponent {
   render() {
-    const { children, theme, nowShowing } = this.props;
+    const { children, theme, nowShowing, isMobile } = this.props;
     return (
       <div className="page">
-        <Header />
+        <Header isMobile={isMobile} />
         <div className="body">{children}</div>
         <style jsx global>
           {`
