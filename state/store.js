@@ -11,4 +11,4 @@ const initStore = (state = initialState) => {
   return createStore(reducer, state, composeEnhancers(applyMiddleware(thunk)));
 };
 
-export default createWrapper(initStore, { debug: true });
+export default createWrapper(initStore, { debug: process.env.NODE_ENV !== 'production' });
