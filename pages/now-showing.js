@@ -68,7 +68,7 @@ NowShowing.getInitialProps = async () => {
     process.env.NODE_ENV === 'production'
       ? 'https://clapcitycinema.herokuapp.com'
       : 'http://localhost:3000';
-  const res = await fetch(`${baseUrl}/api/twitch?reqType=isLive`).then(async (response) => {
+  const res = await fetch(`${baseUrl}/twitch?reqType=isLive`).then(async (response) => {
     const reply = await response.json();
     return reply.response;
   });

@@ -191,11 +191,11 @@ function Index(props) {
 }
 
 Index.getInitialProps = async () => {
-  const res = await fetch(`${baseUrl}/api/twitch?reqType=isLive`).then(async (response) => {
+  const res = await fetch(`${baseUrl}/twitch?reqType=isLive`).then(async (response) => {
     const reply = await response.json();
     return reply.response;
   });
-
+  console.log(res);
   return { isLive: res };
 };
 
