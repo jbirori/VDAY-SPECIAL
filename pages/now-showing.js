@@ -27,7 +27,7 @@ export default function NowShowing() {
   };
 
   return (
-    <Layout theme="dark">
+    <Layout theme="dark" nowShowing>
       <iframe
         src={`https://player.twitch.tv/?channel=${twitchUserName}&parent=${socketURL}`}
         height="80%"
