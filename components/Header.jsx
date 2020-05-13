@@ -11,7 +11,8 @@ export default function Header() {
         {`
           .header {
             display: flex;
-            padding: 10px;
+            padding-left: 25px;
+            padding-top: 25px;
             height: 80px;
             align-items: center;
           }
@@ -19,7 +20,6 @@ export default function Header() {
           .logo {
             position: relative;
             height: 100%;
-            margin-left: 2em;
             cursor: pointer;
           }
         `}

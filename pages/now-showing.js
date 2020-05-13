@@ -25,7 +25,7 @@ export default function NowShowing() {
   };
 
   return (
-    <Layout theme="dark">
+    <Layout theme="dark" nowShowing>
       <iframe
         src={`https://player.twitch.tv/?channel=${twitchUserName}&parent=${socketURL}`}
         height="80%"
@@ -33,7 +33,7 @@ export default function NowShowing() {
         frameBorder="0"
         scrolling="no"
         allowFullScreen="true"
-        title="twitch stream"
+        title="Twitch stream"
       />
       <button type="button" aria-label="Test Button" onClick={sendMessage}>
         Send Test Message
