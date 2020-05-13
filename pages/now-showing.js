@@ -44,11 +44,5 @@ export default function NowShowing(props) {
 }
 
 NowShowing.getInitialProps = async () => {
-  const baseUrl = process.env.BASE_URL || 'http://localhost:3000';
-  const res = await fetch(`${baseUrl}/twitch?reqType=isLive`).then(async (response) => {
-    const reply = await response.json();
-    return reply.response;
-  });
-
-  return { isLive: res };
+  return { isLive: true };
 };
