@@ -32,13 +32,40 @@ export default function Index({ isLive }) {
         )}
       </div>
 
-      <style jsx>
+      <style jsx global>
         {`
+          html {
+            position: relative;
+          }
+
+          html,
+          body,
+          #__next {
+            height: 100%;
+            width: 100%;
+            margin: 0px !important;
+          }
+
           .home-page {
             width: 100%;
             height: 100%;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            flex: 1 1 auto;
+          }
+
+          .logo {
+            max-width: 50%;
+            margin-top: 60px;
+          }
+
+          .showing-content {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
             align-items: center;
             max-height: 100vh;
           }
@@ -76,12 +103,43 @@ export default function Index({ isLive }) {
             z-index: -1
           }
 
-          .admit {
-            cursor: pointer;
+          .showing-content img {
+            margin: 30px 0;
           }
 
-          .disabled {
-            opacity: 0.3;
+          .marquee {
+            max-width: 75%;
+            max-height: 30vh;
+          }
+
+          .admit {
+            cursor: pointer;
+            max-width: 40%;
+          }
+
+          .home-page-image {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+
+            background-image: url('/CCC-bkg.png');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+          }
+
+          .home-page-filter {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            opacity: 0.9;
+            background-color: ${isLive ? '#1B1B1B' : '#FFFFFF'};
           }
 
           .admit, .disabled {
@@ -97,7 +155,7 @@ export default function Index({ isLive }) {
           }
         `}
       </style>
-    </Layout>
+    </div>
   );
 }
 
