@@ -26,7 +26,7 @@ export default function Index({ isLive }) {
           <div className='body'>
             <img className="marquee" src="/marquee-title.png" alt="Lineup" />
             <Link href="/now-showing">
-              <img style={hoverStyles} className="admit" src="/admit_one.png" onMouseOver={toggleTicketHover} onMouseOut={toggleTicketHover} alt="Admission Ticket" />
+              <img className="admit" src="/admit_one.png" onMouseOver={toggleTicketHover} onMouseOut={toggleTicketHover} alt="Admission Ticket" />
             </Link>
           </div>
         )}
