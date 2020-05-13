@@ -179,7 +179,8 @@ function Index(props) {
 
           @media only screen and (max-width: 500px) {
             .marquee {
-              width: 90%;
+              margin-top: 50px;
+              width: 100%;
             }
           }
         `}
