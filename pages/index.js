@@ -5,24 +5,20 @@ import Link from 'next/link';
 import fetch from 'isomorphic-unfetch';
 import Layout from '../components/Layout';
 
-const baseUrl =
-  process.env.NODE_ENV === 'production'
-    ? 'https://clapcitycinema.herokuapp.com'
-    : 'http://localhost:3000';
+const baseUrl = process.env.BASE_URL || 'http://localhost:3000';
 
 function Index(props) {
-  const [ ticketHover, setTicketHover ] = useState(false);
+  const [ticketHover, setTicketHover] = useState(false);
   const [width, setWidth] = useState(null);
   const { isMobile } = props.ua;
   const { isLive } = props;
-  const getWidth = () => window.innerWidth
-    || document.documentElement.clientWidth
-    || document.body.clientWidth;
+  const getWidth = () =>
+    window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 
   useEffect(() => {
     const resizeListener = () => {
       // change width from the state object
-      setWidth(getWidth())
+      setWidth(getWidth());
     };
     resizeListener();
     // set resize listener
@@ -32,26 +28,32 @@ function Index(props) {
     return () => {
       // remove resize listener
       window.removeEventListener('resize', resizeListener);
-    }
-  }, [])
+    };
+  }, []);
 
   const renderMobile = isMobile || (width !== null && width < 450);
   const toggleTicketHover = () => setTicketHover(!ticketHover);
   return (
-    <Layout isMobile={renderMobile} theme='dark'>
+    <Layout isMobile={renderMobile} theme="dark">
       <div className="home-page">
-        <div className='overlay'></div>
+        <div className="overlay"></div>
         {!isLive && (
-          <div className='body'>
-          <img className="marquee" src="/marquee-title.png" alt="Lineup" />
+          <div className="body">
+            <img className="marquee" src="/marquee-title.png" alt="Lineup" />
             <img className="disabled" src="/red_ticket.png" alt="Admission Ticket" />
           </div>
         )}
         {isLive && (
-          <div className='body'>
+          <div className="body">
             <img className="marquee" src="/marquee-title.png" alt="Lineup" />
             <Link href="/now-showing">
-              <img className="admit" src="/red_ticket.png" onMouseOver={toggleTicketHover} onMouseOut={toggleTicketHover} alt="Admission Ticket" />
+              <img
+                className="admit"
+                src="/red_ticket.png"
+                onMouseOver={toggleTicketHover}
+                onMouseOut={toggleTicketHover}
+                alt="Admission Ticket"
+              />
             </Link>
           </div>
         )}
@@ -101,8 +103,8 @@ function Index(props) {
             left: 0;
             height: 100vh;
             width: 100vw;
-            background: ${ isLive ? '#1b1b1b' : '#ffffff' };
-            opacity: .925;
+            background: ${isLive ? '#1b1b1b' : '#ffffff'};
+            opacity: 0.925;
             z-index: 1;
           }
 
@@ -126,7 +128,7 @@ function Index(props) {
             left: 0;
             height: 100vh;
             width: 100vw;
-            z-index: -1
+            z-index: -1;
           }
 
           .showing-content img {
@@ -168,11 +170,12 @@ function Index(props) {
           }
 
           .disabled {
-            opacity: .4;
+            opacity: 0.4;
             display: none;
           }
 
-          .admit, .disabled {
+          .admit,
+          .disabled {
             z-index: 2;
             width: 125px;
             transform: ${ticketHover ? 'rotate(14deg)' : null};
@@ -203,4 +206,4 @@ Index.propTypes = {
   isLive: PropTypes.bool.isRequired,
 };
 
-export default withUserAgent(Index)
+export default withUserAgent(Index);
