@@ -35,7 +35,7 @@ export default function NowShowing() {
         frameBorder="0"
         scrolling="no"
         allowFullScreen="true"
-        title="twitch stream"
+        title="Twitch stream"
       />
       <button type="button" aria-label="Test Button" onClick={sendMessage}>
         Send Test Message

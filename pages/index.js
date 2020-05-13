@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 import fetch from 'isomorphic-unfetch';
-
 import Layout from '../components/Layout';
 
 const baseUrl =
@@ -12,8 +11,9 @@ const baseUrl =
 
 export default function Index({ isLive }) {
   return (
-    <Layout>
+    <Layout theme='dark'>
       <div className="home-page">
+        <div className='overlay'></div>
         {!isLive && <img className="disabled" src="/admit_one.png" alt="Admission Ticket" />}
         {isLive && (
           <Link href="/now-showing">
@@ -30,6 +30,27 @@ export default function Index({ isLive }) {
             display: flex;
             justify-content: center;
             align-items: center;
+            max-height: 100vh;
+          }
+
+          .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: 100vw;
+            background: ${ isLive ? '#1b1b1b' : '#ffffff' };
+            opacity: .925;
+            z-index: 1;
+          }
+
+          .bkg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: 100vw;
+            z-index: -1
           }
 
           .admit {
@@ -38,6 +59,10 @@ export default function Index({ isLive }) {
 
           .disabled {
             opacity: 0.3;
+          }
+
+          .admit, .disabled {
+            z-index: 2;
           }
         `}
       </style>

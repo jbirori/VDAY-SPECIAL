@@ -35,10 +35,16 @@ class Layout extends PureComponent {
               display: flex;
               flex-direction: column;
               flex: 1 1 auto;
+              background: url('/CCCbkg.png');
             }
 
             .body {
               flex-grow: 1;
+              z-index: 1;
+            }
+
+            .header {
+              z-index: 2;
             }
           `}
         </style>
