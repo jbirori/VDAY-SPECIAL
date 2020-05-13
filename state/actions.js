@@ -6,3 +6,9 @@ export const sendMessage = (message) => (dispatch) =>
     type: actionTypes.SEND_MESSAGE,
     message,
   });
+
+export const receivedMessage = (message) => (dispatch) =>
+  dispatch({
+    type: actionTypes.RECEIVED_MESSAGE,
+    message,
+  });

@@ -8,6 +8,7 @@ const chatReducer = (state = initialState.chat, action) => {
     case HYDRATE:
       return { ...state, ...action.payload.chat };
     case actionTypes.SEND_MESSAGE:
+    case actionTypes.RECEIVED_MESSAGE:
       return { ...state, messages: [...state.messages, action.message] };
     default:
       return state;

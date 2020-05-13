@@ -17,8 +17,7 @@ export default function NowShowing() {
 
   useEffect(() => {
     socket.on('message', (data) => {
-      console.log(data);
-      // socket.emit('my other event', { my: 'data' });
+      dispatch(actions.receivedMessage(data));
     });
   }, []);
 
