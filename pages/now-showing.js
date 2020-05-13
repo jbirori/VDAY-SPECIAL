@@ -15,11 +15,9 @@ export default function NowShowing() {
   const dispatch = useDispatch();
   const messages = useSelector((state) => state.chat.messages);
 
-  useEffect(() => {
-    socket.on('message', (data) => {
-      dispatch(actions.receivedMessage(data));
-    });
-  }, []);
+  socket.on('message', (data) => {
+    dispatch(actions.receivedMessage(data));
+  });
 
   const sendMessage = () => {
     const testMessage = Date.now().toString();
