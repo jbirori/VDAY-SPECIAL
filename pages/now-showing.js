@@ -11,7 +11,15 @@ const socketURL =
     : 'http://localhost:3000';
 const socket = io(socketURL);
 
-export default function NowShowing() {
+export default function NowShowing(props) {
+  const { isLive } = props;
+
+  useEffect(() => {
+    if (!isLive) {
+      window.location.href = '/';
+    }
+  })
+
   const dispatch = useDispatch();
   const messages = useSelector((state) => state.chat.messages);
 
@@ -24,7 +32,7 @@ export default function NowShowing() {
     dispatch(actions.sendMessage(socket, testMessage));
   };
 
-  return (
+  return isLive ? (
     <Layout theme="dark" nowShowing>
       <div className='nowShowing-body'>
         <iframe
@@ -44,7 +52,7 @@ export default function NowShowing() {
           align-items: center;
           justify-content: center;
           margin-top: 15px;
-          height: calc(100vh - 120px); 
+          height: calc(100vh - 120px);
         }
 
         iframe {
@@ -52,5 +60,18 @@ export default function NowShowing() {
         }
       `}</style>
     </Layout>
-  );
+  ) : null;
 }
+
+NowShowing.getInitialProps = async () => {
+  const baseUrl =
+    process.env.NODE_ENV === 'production'
+      ? 'https://clapcitycinema.herokuapp.com'
+      : 'http://localhost:3000';
+  const res = await fetch(`${baseUrl}/api/twitch?reqType=isLive`).then(async (response) => {
+    const reply = await response.json();
+    return reply.response;
+  });
+
+  return { isLive: res };
+};

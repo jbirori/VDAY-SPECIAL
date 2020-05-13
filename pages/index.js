@@ -169,6 +169,7 @@ function Index(props) {
 
           .disabled {
             opacity: .4;
+            display: none;
           }
 
           .admit, .disabled {
