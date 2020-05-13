@@ -89,6 +89,12 @@ export default function Index({ isLive }) {
             width: 125px;
             transform: ${ticketHover ? 'rotate(14deg)' : null};
           }
+
+          @media only screen and (max-width: 500px) {
+            .marquee {
+              width: 90%;
+            }
+          }
         `}
       </style>
     </Layout>
