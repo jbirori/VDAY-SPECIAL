@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 
-export default function Header() {
+export default function Header(props) {
   return (
     <div className="header">
       <Link href="/">
@@ -11,15 +11,15 @@ export default function Header() {
         {`
           .header {
             display: flex;
-            padding: 10px;
+            padding-left: 25px;
+            padding-top: 25px;
             height: 80px;
             align-items: center;
           }
 
           .logo {
             position: relative;
-            height: 100%;
-            margin-left: 2em;
+            height: ${props.isMobile ? 'auto' : '100%'};
             cursor: pointer;
           }
         `}
