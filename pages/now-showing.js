@@ -23,7 +23,7 @@ export default function NowShowing() {
 
   const sendMessage = () => {
     const testMessage = Date.now().toString();
-    dispatch(actions.sendMessage(testMessage));
+    dispatch(actions.sendMessage(socket, testMessage));
   };
 
   return (
