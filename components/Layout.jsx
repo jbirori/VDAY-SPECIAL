@@ -46,6 +46,12 @@ class Layout extends PureComponent {
             .header {
               z-index: 2;
             }
+
+            @media only screen and (max-width: 500px) {
+              .page {
+                height: 100vh;
+              }
+            }
           `}
         </style>
       </div>
