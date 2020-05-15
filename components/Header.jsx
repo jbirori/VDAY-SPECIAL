@@ -1,29 +1,34 @@
 import React from 'react';
 import Link from 'next/link';
+import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
-export default function Header(props) {
+function Header({ isMobile }) {
   return (
-    <div className="header">
+    <Header.Container>
       <Link href="/">
-        <img className="logo" src="/CCCLogo.png" alt="Clap City Cinema Logo" />
+        <Header.Logo src="/CCCLogo.png" isMobile={isMobile} alt="Clap City Cinema Logo" />
       </Link>
-      <style jsx>
-        {`
-          .header {
-            display: flex;
-            padding-left: 25px;
-            padding-top: 25px;
-            height: 80px;
-            align-items: center;
-          }
-
-          .logo {
-            position: relative;
-            height: ${props.isMobile ? 'auto' : '100%'};
-            cursor: pointer;
-          }
-        `}
-      </style>
-    </div>
+    </Header.Container>
   );
 }
+
+Header.propTypes = {
+  isMobile: PropTypes.bool.isRequired,
+};
+
+Header.Container = styled.div`
+  display: flex;
+  padding-left: 25px;
+  padding-top: 25px;
+  height: 80px;
+  align-items: center;
+`;
+
+Header.Logo = styled.img`
+  position: relative;
+  height: ${(p) => (p.isMobile ? 'auto' : '100%')};
+  cursor: pointer;
+`;
+
+export default Header;
