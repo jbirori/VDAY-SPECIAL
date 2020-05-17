@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import io from 'socket.io-client';
 import { useDispatch } from 'react-redux';
@@ -15,6 +15,13 @@ const socket = io(socketURL);
 
 function Chat() {
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    return () => {
+      socket.off('message');
+    };
+  }, []);
+
   socket.on('message', (data) => {
     dispatch(actions.receivedMessage(data));
   });
