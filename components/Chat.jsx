@@ -1,9 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import io from 'socket.io-client';
+import { useDispatch } from 'react-redux';
 import TitleBar from './TitleBar';
 import MessageForm from './MessageForm';
 import MessageList from './MessageList';
+import * as actions from '../state/actions';
 
 const socketURL =
   process.env.NODE_ENV === 'production'
@@ -12,6 +14,11 @@ const socketURL =
 const socket = io(socketURL);
 
 function Chat() {
+  const dispatch = useDispatch();
+  socket.on('message', (data) => {
+    dispatch(actions.receivedMessage(data));
+  });
+
   return (
     <Chat.Container>
       <TitleBar />
