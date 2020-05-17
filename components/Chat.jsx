@@ -31,20 +31,10 @@ function Chat() {
 Chat.Container = styled.div`
   display: flex;
   flex-direction: column;
-  max-width: 800px;
-  min-width: 500px;
-  width: 80%;
-  height: 80%;
-  min-height: 300px;
-  position: absolute;
   border-radius: 5px;
-  top: 50%;
-  margin: 0 auto;
-  left: 0;
-  right: 0;
   background-color: white;
-  transform: translateY(-53%);
   box-shadow: 2px 7px 10px rgba(0, 0, 0, 0.5);
+  height: 100%;
 `;
 
 export default Chat;

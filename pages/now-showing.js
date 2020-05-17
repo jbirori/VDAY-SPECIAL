@@ -1,52 +1,59 @@
 import React, { useEffect } from 'react';
+import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import Layout from '../components/Layout';
 import Chat from '../components/Chat';
+import TwitchStream from '../components/TwitchStream';
 
-const twitchUserName = 'linkywolfe';
-
-export default function NowShowing(props) {
-  const { isLive } = props;
-
+export default function NowShowing({ isLive }) {
   useEffect(() => {
     if (!isLive) {
-      // window.location.href = '/';
+      window.location.href = '/';
     }
   });
 
-  return isLive ? (
+  return (
     <Layout theme="dark" nowShowing>
-      <div className="nowShowing-body">
-        <iframe
-          src={`https://player.twitch.tv/?channel=${twitchUserName}`}
-          height="80%"
-          width="100%"
-          frameBorder="0"
-          scrolling="no"
-          allowFullScreen="true"
-          title="Twitch stream"
-        />
-      </div>
-      <style jsx>{`
-        .nowShowing-body {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          margin-top: 15px;
-          height: calc(100vh - 120px);
-        }
-
-        iframe {
-          width: 90%;
-        }
-      `}</style>
+      <NowShowing.Container>
+        <NowShowing.Stream>
+          <TwitchStream />
+        </NowShowing.Stream>
+        <NowShowing.Chat>
+          <Chat />
+        </NowShowing.Chat>
+      </NowShowing.Container>
     </Layout>
-  ) : (
-    <Chat />
   );
 }
 
+NowShowing.propTypes = {
+  isLive: PropTypes.bool,
+};
+
+NowShowing.defaultProps = {
+  isLive: true,
+};
+
+NowShowing.Container = styled.div`
+  display: flex;
+  padding: 64px;
+`;
+
+NowShowing.Stream = styled.div`
+  flex-grow: 3;
+  margin-right: 10px;
+  min-height: 600px;
+`;
+
+NowShowing.Chat = styled.div`
+  flex-grow: 1;
+`;
+
 NowShowing.getInitialProps = async () => {
+  if (process.env.NODE_ENV !== 'production') {
+    return { isLive: true };
+  }
+
   const baseUrl =
     process.env.NODE_ENV === 'production'
       ? 'https://clapcitycinema.herokuapp.com'
