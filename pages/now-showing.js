@@ -37,12 +37,12 @@ NowShowing.defaultProps = {
 NowShowing.Container = styled.div`
   display: flex;
   padding: 64px;
+  height: 600px;
 `;
 
 NowShowing.Stream = styled.div`
   flex-grow: 3;
   margin-right: 10px;
-  min-height: 600px;
 `;
 
 NowShowing.Chat = styled.div`

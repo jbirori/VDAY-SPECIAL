@@ -22,9 +22,9 @@ function MessageForm({ socket }) {
 
   return (
     <MessageForm.Container>
-      <form onSubmit={onSubmit}>
+      <MessageForm.Form onSubmit={onSubmit}>
         <MessageForm.Input onChange={onMessageChange} value={inputText} autoComplete="off" />
-      </form>
+      </MessageForm.Form>
     </MessageForm.Container>
   );
 }
@@ -35,12 +35,12 @@ MessageForm.propTypes = {
 };
 
 MessageForm.Container = styled.div`
+  padding: 10px;
+`;
+
+MessageForm.Form = styled.form`
   width: 100%;
-  padding: 0px 10px;
-  margin-top: 10px;
-  height: 50px;
-  bottom: 0px;
-  flex: none;
+  display: flex;
 `;
 
 MessageForm.Input = styled.input`
@@ -48,13 +48,12 @@ MessageForm.Input = styled.input`
   border: 1px #979797;
   border-style: solid;
   border-width: 1px;
-  display: block;
   margin: 0;
   appearance: none;
   box-shadow: none;
   border-radius: none;
-  width: 100%;
   padding-left: 5px;
+  width: 100%;
 
   &:focus,
   textarea:focus {
