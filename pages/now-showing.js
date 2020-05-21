@@ -1,69 +1,59 @@
 import React, { useEffect } from 'react';
-import io from 'socket.io-client';
-import { useDispatch, useSelector } from 'react-redux';
+import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import Layout from '../components/Layout';
-import * as actions from '../state/actions';
+import Chat from '../components/Chat';
+import TwitchStream from '../components/TwitchStream';
 
-const twitchUserName = 'linkywolfe';
-const socketURL =
-  process.env.NODE_ENV === 'production'
-    ? 'https://clapcitycinema.herokuapp.com'
-    : 'http://localhost:3000';
-const socket = io(socketURL);
-
-export default function NowShowing(props) {
-  const { isLive } = props;
-
+export default function NowShowing({ isLive }) {
   useEffect(() => {
     if (!isLive) {
       window.location.href = '/';
     }
-  })
-
-  const dispatch = useDispatch();
-  const messages = useSelector((state) => state.chat.messages);
-
-  socket.on('message', (data) => {
-    dispatch(actions.receivedMessage(data));
   });
 
-  const sendMessage = () => {
-    const testMessage = Date.now().toString();
-    dispatch(actions.sendMessage(socket, testMessage));
-  };
-
-  return isLive ? (
+  return (
     <Layout theme="dark" nowShowing>
-      <div className='nowShowing-body'>
-        <iframe
-          src={`https://player.twitch.tv/?channel=${twitchUserName}&parent=${socketURL}`}
-          height="80%"
-          width="100%"
-          frameBorder="0"
-          scrolling="no"
-          allowFullScreen="true"
-          title="Twitch stream"
-        />
-      </div>
-      <style jsx>{`
-        .nowShowing-body {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          margin-top: 15px;
-          height: calc(100vh - 120px);
-        }
-
-        iframe {
-          width: 90%;
-        }
-      `}</style>
+      <NowShowing.Container>
+        <NowShowing.Stream>
+          <TwitchStream />
+        </NowShowing.Stream>
+        <NowShowing.Chat>
+          <Chat />
+        </NowShowing.Chat>
+      </NowShowing.Container>
     </Layout>
-  ) : null;
+  );
 }
 
+NowShowing.propTypes = {
+  isLive: PropTypes.bool,
+};
+
+NowShowing.defaultProps = {
+  isLive: true,
+};
+
+NowShowing.Container = styled.div`
+  display: flex;
+  padding: 64px;
+  height: 600px;
+`;
+
+NowShowing.Stream = styled.div`
+  flex-grow: 3;
+  margin-right: 10px;
+`;
+
+NowShowing.Chat = styled.div`
+  flex-grow: 1;
+`;
+
 NowShowing.getInitialProps = async () => {
+  if (process.env.NODE_ENV !== 'production') {
+    return { isLive: true };
+  }
+
   const baseUrl =
     process.env.NODE_ENV === 'production'
       ? 'https://clapcitycinema.herokuapp.com'
