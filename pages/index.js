@@ -14,7 +14,7 @@ function Index(props) {
   const [ ticketHover, setTicketHover ] = useState(false);
   const [width, setWidth] = useState(null);
   const { isMobile } = props.ua;
-  const { isLive } = props;
+  const { isLive, schedule } = props;
   const getWidth = () => window.innerWidth
     || document.documentElement.clientWidth
     || document.body.clientWidth;
@@ -43,7 +43,7 @@ function Index(props) {
         <div className='overlay'></div>
         {!isLive && (
           <div className='body'>
-          <img className="marquee" src="/marquee-title.png" alt="Lineup" />
+          <img className="marquee" src={schedule} alt="Movie Schedule" />
             <img className="disabled" src="/red_ticket.png" alt="Admission Ticket" />
           </div>
         )}
@@ -191,12 +191,23 @@ function Index(props) {
 }
 
 Index.getInitialProps = async () => {
-  const res = await fetch(`${baseUrl}/twitch?reqType=isLive`).then(async (response) => {
-    const reply = await response.json();
-    return reply.response;
+  let isStreamLive;
+  let schedule;
+
+  const client = require('contentful').createClient({
+    space: process.env.CONTENTFUL_SPACE_ID,
+    accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
   });
-  console.log(res);
-  return { isLive: res };
+
+  await client.getEntries({
+    content_type: 'streamInfo',
+  }).then((res) => {
+    const { isLive, scheduleGraphic } = [...res.items][0].fields;
+    isStreamLive = isLive;
+    schedule = scheduleGraphic.fields.file.url;
+  });
+
+  return { isLive: isStreamLive, schedule };
 };
 
 Index.propTypes = {
