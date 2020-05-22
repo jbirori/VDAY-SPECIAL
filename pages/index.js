@@ -11,18 +11,17 @@ const baseUrl =
     : 'http://localhost:3000';
 
 function Index(props) {
-  const [ ticketHover, setTicketHover ] = useState(false);
+  const [ticketHover, setTicketHover] = useState(false);
   const [width, setWidth] = useState(null);
   const { isMobile } = props.ua;
   const { isLive, schedule } = props;
-  const getWidth = () => window.innerWidth
-    || document.documentElement.clientWidth
-    || document.body.clientWidth;
+  const getWidth = () =>
+    window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 
   useEffect(() => {
     const resizeListener = () => {
       // change width from the state object
-      setWidth(getWidth())
+      setWidth(getWidth());
     };
     resizeListener();
     // set resize listener
@@ -32,26 +31,32 @@ function Index(props) {
     return () => {
       // remove resize listener
       window.removeEventListener('resize', resizeListener);
-    }
-  }, [])
+    };
+  }, []);
 
   const renderMobile = isMobile || (width !== null && width < 450);
   const toggleTicketHover = () => setTicketHover(!ticketHover);
   return (
-    <Layout isMobile={renderMobile} theme='dark'>
+    <Layout isMobile={renderMobile} theme="dark">
       <div className="home-page">
-        <div className='overlay'></div>
+        <div className="overlay" />
         {!isLive && (
-          <div className='body'>
-          <img className="marquee" src={schedule} alt="Movie Schedule" />
+          <div className="body">
+            <img className="marquee" src={schedule} alt="Movie Schedule" />
             <img className="disabled" src="/red_ticket.png" alt="Admission Ticket" />
           </div>
         )}
         {isLive && (
-          <div className='body'>
+          <div className="body">
             <img className="marquee" src="/marquee-title.png" alt="Lineup" />
             <Link href="/now-showing">
-              <img className="admit" src="/red_ticket.png" onMouseOver={toggleTicketHover} onMouseOut={toggleTicketHover} alt="Admission Ticket" />
+              <img
+                className="admit"
+                src="/red_ticket.png"
+                onMouseOver={toggleTicketHover}
+                onMouseOut={toggleTicketHover}
+                alt="Admission Ticket"
+              />
             </Link>
           </div>
         )}
@@ -101,8 +106,8 @@ function Index(props) {
             left: 0;
             height: 100vh;
             width: 100vw;
-            background: ${ isLive ? '#1b1b1b' : '#ffffff' };
-            opacity: .925;
+            background: ${isLive ? '#1b1b1b' : '#ffffff'};
+            opacity: 0.925;
             z-index: 1;
           }
 
@@ -126,7 +131,7 @@ function Index(props) {
             left: 0;
             height: 100vh;
             width: 100vw;
-            z-index: -1
+            z-index: -1;
           }
 
           .showing-content img {
@@ -168,11 +173,12 @@ function Index(props) {
           }
 
           .disabled {
-            opacity: .4;
+            opacity: 0.4;
             display: none;
           }
 
-          .admit, .disabled {
+          .admit,
+          .disabled {
             z-index: 2;
             width: 125px;
             transform: ${ticketHover ? 'rotate(14deg)' : null};
@@ -191,27 +197,30 @@ function Index(props) {
 }
 
 Index.getInitialProps = async () => {
-  let isStreamLive;
-  let schedule;
-
   const client = require('contentful').createClient({
     space: process.env.CONTENTFUL_SPACE_ID,
     accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
   });
-
-  await client.getEntries({
-    content_type: 'streamInfo',
-  }).then((res) => {
-    const { isLive, scheduleGraphic } = [...res.items][0].fields;
-    isStreamLive = isLive;
-    schedule = scheduleGraphic.fields.file.url;
-  });
-
-  return { isLive: isStreamLive, schedule };
+  let isLive, schedule;
+  await client
+    .getEntries({
+      content_type: 'streamInfo',
+    })
+    .then((res) => {
+      isLive = [...res.items][0].fields.isLive;
+      schedule = [...res.items][0].fields.scheduleGraphic.fields.file.url;
+    })
+    .catch((error) => {
+      console.log(error);
+      isLive = true;
+      schedule = null;
+    });
+  return { isLive, schedule };
 };
 
 Index.propTypes = {
   isLive: PropTypes.bool.isRequired,
+  schedule: PropTypes.string.isRequired,
 };
 
-export default withUserAgent(Index)
+export default withUserAgent(Index);

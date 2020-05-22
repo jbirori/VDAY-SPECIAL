@@ -52,20 +52,21 @@ NowShowing.Chat = styled.div`
 NowShowing.getInitialProps = async () => {
   let isStreamLive;
 
-  console.log('reading: ', process.env.CONTENTFUL_ACCESS_TOKEN )
+  console.log('reading: ', process.env.CONTENTFUL_ACCESS_TOKEN);
 
   const client = require('contentful').createClient({
     space: process.env.CONTENTFUL_SPACE_ID,
     accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
   });
 
-
-  await client.getEntries({
-    content_type: 'streamInfo',
-  }).then((res) => {
-    const { isLive } = [...res.items][0].fields;
-    isStreamLive = isLive;
-  });
+  await client
+    .getEntries({
+      content_type: 'streamInfo',
+    })
+    .then((res) => {
+      const { isLive } = [...res.items][0].fields;
+      isStreamLive = isLive;
+    });
 
   return { isLive: isStreamLive };
 };
