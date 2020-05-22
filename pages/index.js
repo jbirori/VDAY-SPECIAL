@@ -201,7 +201,8 @@ Index.getInitialProps = async () => {
     space: process.env.CONTENTFUL_SPACE_ID,
     accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
   });
-  let isLive, schedule;
+  let isLive;
+  let schedule;
   await client
     .getEntries({
       content_type: 'streamInfo',
