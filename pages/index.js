@@ -212,7 +212,7 @@ Index.getInitialProps = async () => {
       schedule = [...res.items][0].fields.scheduleGraphic.fields.file.url;
     })
     .catch((error) => {
-      console.log(error);
+      console.log('\n Contentful fetch failed! \n', error);
       isLive = true;
       schedule = null;
     });

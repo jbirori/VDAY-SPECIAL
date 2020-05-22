@@ -50,9 +50,7 @@ NowShowing.Chat = styled.div`
 `;
 
 NowShowing.getInitialProps = async () => {
-  let isStreamLive;
-
-  console.log('reading: ', process.env.CONTENTFUL_ACCESS_TOKEN);
+  let isLive;
 
   const client = require('contentful').createClient({
     space: process.env.CONTENTFUL_SPACE_ID,
@@ -64,9 +62,12 @@ NowShowing.getInitialProps = async () => {
       content_type: 'streamInfo',
     })
     .then((res) => {
-      const { isLive } = [...res.items][0].fields;
-      isStreamLive = isLive;
+      isLive = [...res.items][0].fields.isLive;
+    })
+    .catch((error) => {
+      console.log('\n Contentful fetch failed! \n', error);
+      isLive = true;
     });
 
-  return { isLive: isStreamLive };
+  return { isLive };
 };
