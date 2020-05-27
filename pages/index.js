@@ -48,7 +48,7 @@ function Index(props) {
         )}
         {isLive && (
           <div className="body">
-            <img className="marquee" src="/marquee-title.png" alt="Lineup" />
+            <img className="marquee" src={schedule} alt="Lineup" />
             <Link href="/now-showing">
               <img
                 className="admit"
