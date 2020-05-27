@@ -29,6 +29,7 @@ Header.Logo = styled.img`
   position: relative;
   height: ${(p) => (p.isMobile ? 'auto' : '100%')};
   cursor: pointer;
+  z-index: 3;
 `;
 
 export default Header;

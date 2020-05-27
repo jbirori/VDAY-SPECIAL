@@ -50,18 +50,24 @@ NowShowing.Chat = styled.div`
 `;
 
 NowShowing.getInitialProps = async () => {
-  if (process.env.NODE_ENV !== 'production') {
-    return { isLive: true };
-  }
+  let isLive;
 
-  const baseUrl =
-    process.env.NODE_ENV === 'production'
-      ? 'https://clapcitycinema.herokuapp.com'
-      : 'http://localhost:3000';
-  const res = await fetch(`${baseUrl}/twitch?reqType=isLive`).then(async (response) => {
-    const reply = await response.json();
-    return reply.response;
+  const client = require('contentful').createClient({
+    space: process.env.CONTENTFUL_SPACE_ID,
+    accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
   });
 
-  return { isLive: res };
+  await client
+    .getEntries({
+      content_type: 'streamInfo',
+    })
+    .then((res) => {
+      isLive = [...res.items][0].fields.isLive;
+    })
+    .catch((error) => {
+      console.log('\n Contentful fetch failed! \n', error);
+      isLive = true;
+    });
+
+  return { isLive };
 };

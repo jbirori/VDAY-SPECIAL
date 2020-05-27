@@ -35,7 +35,7 @@ class Layout extends PureComponent {
               display: flex;
               flex-direction: column;
               flex: 1 1 auto;
-              background: ${ nowShowing ? '#1b1b1b' : 'url("/CCCbkg.png")'};
+              background: ${nowShowing ? '#1b1b1b' : 'url("/CCCbkg.png")'};
             }
 
             .body {

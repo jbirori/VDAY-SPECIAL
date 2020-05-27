@@ -65,7 +65,7 @@ const isLive = () => {
   }
 };
 
-app.get("/twitch", async (req, res) => {
+app.get('/twitch', async (req, res) => {
   const { reqType } = req.query;
   let response;
 
