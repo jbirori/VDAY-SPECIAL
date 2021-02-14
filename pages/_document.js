@@ -1,5 +1,5 @@
 import React from 'react';
-import Document from 'next/document';
+import Document, { Html, Head, Main, NextScript } from 'next/document';
 import { ServerStyleSheet } from 'styled-components';
 
 export default class MyDocument extends Document {
@@ -27,5 +27,19 @@ export default class MyDocument extends Document {
     } finally {
       sheet.seal();
     }
+  }
+
+  render() {
+    return (
+      <Html>
+        <Head>
+          <link href="https://fonts.googleapis.com/css2?family=Paytone+One" rel="stylesheet" />
+        </Head>
+        <body>
+          <Main />
+          <NextScript />
+        </body>
+      </Html>
+    )
   }
 }

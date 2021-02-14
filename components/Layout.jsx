@@ -9,10 +9,10 @@ const themeTypes = {
 
 class Layout extends PureComponent {
   render() {
-    const { children, theme, nowShowing, isMobile } = this.props;
+    const { children, theme, nowShowing } = this.props;
     return (
       <div className="page">
-        <Header isMobile={isMobile} />
+        <Header nowShowing={nowShowing} />
         <div className="body">{children}</div>
         <style jsx global>
           {`
@@ -35,7 +35,8 @@ class Layout extends PureComponent {
               display: flex;
               flex-direction: column;
               flex: 1 1 auto;
-              background: ${nowShowing ? '#1b1b1b' : 'url("/CCCbkg.png")'};
+              background: center ${nowShowing ? '#1b1b1b' : 'url("/jeffrey-birori-date.png")'};
+              background-size: 250px;
             }
 
             .body {

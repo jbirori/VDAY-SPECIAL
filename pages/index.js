@@ -5,66 +5,63 @@ import Link from 'next/link';
 import fetch from 'isomorphic-unfetch';
 import Layout from '../components/Layout';
 
-const baseUrl =
-  process.env.NODE_ENV === 'production'
-    ? 'https://clapcitycinema.herokuapp.com'
-    : 'http://localhost:3000';
-
 function Index(props) {
+  const vDate = new Date('February 14, 2021 19:00:00 GMT-05:00');
   const [ticketHover, setTicketHover] = useState(false);
-  const [width, setWidth] = useState(null);
-  const { isMobile } = props.ua;
-  const { isLive, schedule } = props;
-  const getWidth = () =>
-    window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+  const [timeTo, setTimeTo] = useState(vDate - Date.now());
+
+  const format2DNum = (num) => {
+    return `${num < 10 ? '0' : ''}${Math.floor(num)}`
+  }
+
+  const getTimeToLabel = () => {
+    let hours, minutes, seconds;
+    hours = timeTo / 1000 / 60 / 60;
+    minutes = (hours % 1) * 60;
+    seconds = (minutes % 1) * 60;
+
+    return `${format2DNum(hours)} : ${format2DNum(minutes)} : ${format2DNum(seconds)}`;
+  }
 
   useEffect(() => {
-    const resizeListener = () => {
-      // change width from the state object
-      setWidth(getWidth());
-    };
-    resizeListener();
-    // set resize listener
-    window.addEventListener('resize', resizeListener);
+
+    // set countdown interval
+    const countdown = setInterval(() => {
+      setTimeTo(_ => vDate - Date.now());;
+    }, 1000);
 
     // clean up function
     return () => {
-      // remove resize listener
-      window.removeEventListener('resize', resizeListener);
+      // clear interval
+      window.clearInterval(countdown);
     };
   }, []);
 
-  const renderMobile = isMobile || (width !== null && width < 450);
   const toggleTicketHover = () => setTicketHover(!ticketHover);
   return (
-    <Layout isMobile={renderMobile} theme="dark">
+    <Layout theme="dark">
       <div className="home-page">
         <div className="overlay" />
-        {!isLive && (
           <div className="body">
-            <img className="marquee" src={schedule} alt="Movie Schedule" />
-            <img className="disabled" src="/red_ticket.png" alt="Admission Ticket" />
+            { timeTo > 0 && <div className="countdown">{ getTimeToLabel() }</div> }
+            { timeTo <= 0 && (
+              <Link href="/now-showing">
+                <img
+                  className="admit"
+                  src="/red_ticket.png"
+                  onMouseOver={toggleTicketHover}
+                  onMouseOut={toggleTicketHover}
+                  alt="Admission Ticket"
+                />
+              </Link>
+            )}
           </div>
-        )}
-        {isLive && (
-          <div className="body">
-            <img className="marquee" src={schedule} alt="Lineup" />
-            <Link href="/now-showing">
-              <img
-                className="admit"
-                src="/red_ticket.png"
-                onMouseOver={toggleTicketHover}
-                onMouseOut={toggleTicketHover}
-                alt="Admission Ticket"
-              />
-            </Link>
-          </div>
-        )}
       </div>
 
       <style jsx global>
         {`
           html {
+            font-family: 'Paytone One', serif;
             position: relative;
           }
 
@@ -90,6 +87,18 @@ function Index(props) {
             margin-top: 25px;
           }
 
+          .countdown {
+            color: #fff;
+            font-size: 7.8125rem;
+            transform: translateY(-50%);
+          }
+
+          @media (max-width: 768px) {
+            .countdown {
+              font-size: 15vw;
+            }
+          }
+
           .showing-content {
             width: 100%;
             height: 100%;
@@ -106,8 +115,8 @@ function Index(props) {
             left: 0;
             height: 100vh;
             width: 100vw;
-            background: ${isLive ? '#1b1b1b' : '#ffffff'};
-            opacity: 0.925;
+            background: #1b1b1b;
+            opacity: 0.75;
             z-index: 1;
           }
 
@@ -155,7 +164,7 @@ function Index(props) {
             top: 0;
             left: 0;
             z-index: -1;
-            background-image: url('/CCC-bkg.png');
+            background-image: url('/jeffrey-birori-date.png');
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
@@ -169,7 +178,7 @@ function Index(props) {
             left: 0;
             z-index: -1;
             opacity: 0.9;
-            background-color: ${isLive ? '#1B1B1B' : '#FFFFFF'};
+            background-color: #1B1B1B;
           }
 
           .disabled {
@@ -195,33 +204,5 @@ function Index(props) {
     </Layout>
   );
 }
-
-Index.getInitialProps = async () => {
-  const client = require('contentful').createClient({
-    space: process.env.CONTENTFUL_SPACE_ID,
-    accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
-  });
-  let isLive;
-  let schedule;
-  await client
-    .getEntries({
-      content_type: 'streamInfo',
-    })
-    .then((res) => {
-      isLive = [...res.items][0].fields.isLive;
-      schedule = [...res.items][0].fields.scheduleGraphic.fields.file.url;
-    })
-    .catch((error) => {
-      console.log('\n Contentful fetch failed! \n', error);
-      isLive = true;
-      schedule = null;
-    });
-  return { isLive, schedule };
-};
-
-Index.propTypes = {
-  isLive: PropTypes.bool.isRequired,
-  schedule: PropTypes.string.isRequired,
-};
 
 export default withUserAgent(Index);

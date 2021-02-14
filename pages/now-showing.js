@@ -5,9 +5,11 @@ import Layout from '../components/Layout';
 import Chat from '../components/Chat';
 import TwitchStream from '../components/TwitchStream';
 
-export default function NowShowing({ isLive }) {
+export default function NowShowing() {
+  const vDate = new Date('February 14, 2021 19:00:00 GMT-05:00');
   useEffect(() => {
-    if (!isLive) {
+    if (vDate - Date.now() > 0) {
+      console.log("yerrr")
       window.location.href = '/';
     }
   });
@@ -18,9 +20,6 @@ export default function NowShowing({ isLive }) {
         <NowShowing.Stream>
           <TwitchStream />
         </NowShowing.Stream>
-        <NowShowing.Chat>
-          <Chat />
-        </NowShowing.Chat>
       </NowShowing.Container>
     </Layout>
   );
@@ -38,36 +37,16 @@ NowShowing.Container = styled.div`
   display: flex;
   padding: 64px;
   height: 600px;
+
+  @media (max-width: 768px) {
+    padding: 50px;
+  }
 `;
 
 NowShowing.Stream = styled.div`
   flex-grow: 3;
-  margin-right: 10px;
 `;
 
 NowShowing.Chat = styled.div`
   flex-grow: 1;
 `;
-
-NowShowing.getInitialProps = async () => {
-  let isLive;
-
-  const client = require('contentful').createClient({
-    space: process.env.CONTENTFUL_SPACE_ID,
-    accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
-  });
-
-  await client
-    .getEntries({
-      content_type: 'streamInfo',
-    })
-    .then((res) => {
-      isLive = [...res.items][0].fields.isLive;
-    })
-    .catch((error) => {
-      console.log('\n Contentful fetch failed! \n', error);
-      isLive = true;
-    });
-
-  return { isLive };
-};

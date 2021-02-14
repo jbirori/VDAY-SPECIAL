@@ -3,33 +3,47 @@ import Link from 'next/link';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-function Header({ isMobile }) {
+function Header({ nowShowing }) {
   return (
-    <Header.Container>
+    <Header.Container nowShowing={nowShowing} >
       <Link href="/">
-        <Header.Logo src="/CCCLogo.png" isMobile={isMobile} alt="Clap City Cinema Logo" />
+        <Header.Logo src="/jeffrey-birori-logo.png" alt="Jeff + Lexi Valentines Special Logo" />
       </Link>
     </Header.Container>
   );
 }
 
 Header.propTypes = {
-  isMobile: PropTypes.bool.isRequired,
+  nowShowing: PropTypes.bool.isRequired,
 };
 
 Header.Container = styled.div`
   display: flex;
-  padding-left: 25px;
-  padding-top: 25px;
-  height: 80px;
+  padding-left: 64px;
+  padding-right: 64px;
+  padding-top: ${(p) => (p.nowShowing ? '64px' : '115px')};
+  height: ${(p) => (p.nowShowing ? '80px' : '175px')};
+  justify-content: ${(p) => (p.nowShowing ? 'flex-start' : 'center')};
   align-items: center;
+
+  @media (max-width: 768px) {
+    height: 80px;
+    padding-top: 50px;
+    justify-content: center;
+  }
 `;
 
 Header.Logo = styled.img`
   position: relative;
-  height: ${(p) => (p.isMobile ? 'auto' : '100%')};
+  height: 100%;
   cursor: pointer;
   z-index: 3;
+
+  @media (max-width: 768px) {
+    height: auto;
+    max-height: 100%;
+    max-width: 95%;
+  }
 `;
 
 export default Header;
