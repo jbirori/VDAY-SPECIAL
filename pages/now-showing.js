@@ -47,7 +47,8 @@ NowShowing.Container = styled.div`
 `;
 
 NowShowing.Stream = styled.div`
-  flex-grow: 3;
+  height: 100%;
+  width: 100%;
 `;
 
 NowShowing.Chat = styled.div`
