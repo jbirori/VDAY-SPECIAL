@@ -2,7 +2,7 @@ import React from 'react';
 
 const twitchUserName = 'easportsfifa';
 const parent = process.env.NODE_ENV === 'production'
-    ? 'lexis-vday.com'
+    ? 'www.lexis-vday.com'
     : 'localhost';
 
 function TwitchStream() {
