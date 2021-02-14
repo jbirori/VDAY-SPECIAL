@@ -113,8 +113,8 @@ function Index(props) {
             position: absolute;
             top: 0;
             left: 0;
-            height: 100vh;
-            width: 100vw;
+            height: 100%;
+            width: 100%;
             background: #1b1b1b;
             opacity: 0.75;
             z-index: 1;
