@@ -14,7 +14,7 @@ function Header({ nowShowing }) {
 }
 
 Header.propTypes = {
-  nowShowing: PropTypes.bool.isRequired,
+  nowShowing: PropTypes.bool,
 };
 
 Header.Container = styled.div`
