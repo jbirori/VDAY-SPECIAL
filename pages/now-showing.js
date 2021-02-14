@@ -35,10 +35,14 @@ NowShowing.defaultProps = {
 NowShowing.Container = styled.div`
   display: flex;
   padding: 64px;
-  height: 600px;
+  height: 100%;
+  max-height: 600px;
 
   @media (max-width: 768px) {
+    align-items: center;
+    box-sizing: border-box;
     padding: 32px;
+    max-height: 1000px;
   }
 `;
 
