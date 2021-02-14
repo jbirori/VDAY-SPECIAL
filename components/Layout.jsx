@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Header from './Header';
+import RainHearts from './RainHearts';
 
 const themeTypes = {
   LIGHT: 'light',
@@ -13,6 +14,7 @@ class Layout extends PureComponent {
     return (
       <div className="page">
         <Header nowShowing={nowShowing} />
+        <RainHearts />
         <div className="body">{children}</div>
         <style jsx global>
           {`
@@ -27,6 +29,7 @@ class Layout extends PureComponent {
               width: 100%;
               margin: 0px !important;
               background-color: ${theme === themeTypes.LIGHT ? '#fff' : '#1F1F1F'};
+              overflow: hidden;
             }
 
             .page {

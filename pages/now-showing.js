@@ -6,7 +6,7 @@ import Chat from '../components/Chat';
 import TwitchStream from '../components/TwitchStream';
 
 export default function NowShowing() {
-  const vDate = new Date('February 14, 2021 19:00:00 GMT-05:00');
+  const vDate = new Date('February 14, 2021 02:00:00 GMT-05:00');
   useEffect(() => {
     if (vDate - Date.now() > 0) {
       window.location.href = '/';
