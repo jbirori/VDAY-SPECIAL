@@ -19,8 +19,8 @@ function RainHearts() {
         var sizeR = getRandomArbitrary(10,30);
         var startLeft = getRandomArbitrary(0,screenWidth);
 
-        var timeRun = getRandomArbitrary(4000,6000);
-        var delay = getRandomArbitrary(1000,6000);
+        var timeRun = getRandomArbitrary(5000,8000);
+        var delay = getRandomArbitrary(0,6000);
         var opacityR = Math.random() * (1 - 0.2) + 0.2;
         var sizeR = getRandomArbitrary(5,20);
 
