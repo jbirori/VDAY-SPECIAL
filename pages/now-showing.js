@@ -38,7 +38,7 @@ NowShowing.Container = styled.div`
   height: 600px;
 
   @media (max-width: 768px) {
-    padding: 50px;
+    padding: 32px;
   }
 `;
 

@@ -27,8 +27,8 @@ Header.Container = styled.div`
   align-items: center;
 
   @media (max-width: 768px) {
-    height: 80px;
-    padding-top: 50px;
+    height: ${(p) => (p.nowShowing ? '60px' : '80px')};
+    padding-top: 32px;
     justify-content: center;
   }
 `;
