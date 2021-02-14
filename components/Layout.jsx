@@ -40,6 +40,7 @@ class Layout extends PureComponent {
             }
 
             .body {
+              height: 100%;
               flex-grow: 1;
               z-index: 1;
             }
