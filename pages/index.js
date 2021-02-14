@@ -90,7 +90,6 @@ function Index(props) {
           .countdown {
             color: #fff;
             font-size: 7.8125rem;
-            transform: translateY(-50%);
           }
 
           @media (max-width: 768px) {
