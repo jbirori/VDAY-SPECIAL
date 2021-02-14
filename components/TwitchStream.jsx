@@ -1,6 +1,6 @@
 import React from 'react';
 
-const twitchUserName = 'easportsfifa';
+const twitchUserName = 'j_biscotti';
 const parent = process.env.NODE_ENV === 'production'
     ? 'www.lexis-vday.com'
     : 'localhost';
