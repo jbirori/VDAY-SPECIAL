@@ -29,7 +29,6 @@ class Layout extends PureComponent {
               width: 100%;
               margin: 0px !important;
               background-color: ${theme === themeTypes.LIGHT ? '#fff' : '#1F1F1F'};
-              overflow: hidden;
             }
 
             .page {
