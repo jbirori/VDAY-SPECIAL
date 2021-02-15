@@ -6,7 +6,7 @@ import fetch from 'isomorphic-unfetch';
 import Layout from '../components/Layout';
 
 function Index(props) {
-  const vDate = new Date('February 14, 2021 19:00:00 GMT-05:00');
+  const vDate = new Date('February 14, 2022 12:00:00 GMT-05:00');
   const [ticketHover, setTicketHover] = useState(false);
   const [timeTo, setTimeTo] = useState(vDate - Date.now());
 
