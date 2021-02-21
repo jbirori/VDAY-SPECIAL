@@ -95,7 +95,7 @@ function Index(props) {
 
           @media (max-width: 768px) {
             .countdown {
-              font-size: 15vw;
+              font-size: 13vw;
             }
           }
 
